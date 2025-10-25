@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  web:
+    image: php:8.1-apache
+    container_name: portafolio_web
+    ports:
+      - "8080:80" # acceder en http://localhost:8080/
+    volumes:
+      # monta cada proyecto dentro de /var/www/html para que sean accesibles por ruta
+      - ./CentroOdontologico:/var/www/html/CentroOdontologico:ro
+      - ./comerciosys:/var/www/html/comerciosys:ro
+      - ./farmacia:/var/www/html/farmacia:ro
+      - ./Ferreteria:/var/www/html/Ferreteria:ro
+      - ./gestionrs:/var/www/html/gestionrs:ro
+      - ./optica_pro:/var/www/html/optica_pro:ro
+      # monta la carpeta del portafolio para la página estática
+      - ./:/var/www/html/portafolio:ro
+      # copia index.html a la raíz para que http://localhost:8080/ muestre el portafolio
+      - ./index.html:/var/www/html/index.html:ro
+      - ./projects.json:/var/www/html/projects.json:ro
+      - ./assets:/var/www/html/assets:ro
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: mariadb:10.6
+    container_name: portafolio_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_USER: demo
+      MYSQL_PASSWORD: demo
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    restart: unless-stopped
+
+volumes:
+  db_data:

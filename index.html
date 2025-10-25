@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Portafolio — Demos</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <h1>Portafolio de sistemas</h1>
+    <p class="lead">Demos estáticos de tus sistemas (sirve en XAMPP o en cualquier hosting estático si los sistemas se suben por separado).</p>
+    <div class="actions">
+      <a class="btn" href="#projects">Ver demos</a>
+      <a class="btn ghost" href="#deploy">Cómo publicar</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="projects">
+  <h2>Proyectos</h2>
+  <div id="grid" class="grid">Cargando proyectos…</div>
+</main>
+
+<section class="wrap" id="about">
+  <h2>Sobre este portafolio</h2>
+  <p>Este sitio agrupa demos de sistemas desarrollados en PHP + MySQL + JS + CSS. Cada tarjeta abre una demo en una nueva pestaña para que puedas explorarlas en vivo. Los proyectos se entregan tal como fueron desarrollados; algunos requieren configuraciones propias (bases de datos, credenciales).</p>
+  <h3>Contacto</h3>
+  <p>Si quieres más información, una demostración guiada o acceso temporal con datos de ejemplo, contáctame:</p>
+  <ul>
+    <li>Email: <a href="mailto:tu-email@ejemplo.com">tu-email@ejemplo.com</a></li>
+    <li>LinkedIn / GitHub: agrega tus enlaces aquí</li>
+  </ul>
+</section>
+
+<footer class="site-foot">
+  Portafolio — demos de sistemas • Hecho con ❤️
+</footer>
+
+<!-- Modal -->
+<div id="modal" class="modal" aria-hidden="true" role="dialog">
+  <div class="modal-panel">
+    <button id="modal-close" class="modal-close">×</button>
+    <h3 id="modal-title">Título</h3>
+    <div id="modal-body"></div>
+    <div class="modal-actions">
+      <a id="modal-open" class="btn" target="_blank" href="#">Abrir demo</a>
+    </div>
+  </div>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+[
+  {
+    "name": "CentroOdontologico",
+    "path": "./CentroOdontologico/",
+    "desc": "Sistema de gestión para centro odontológico (PHP, MySQL, JS, CSS)",
+    "tech": ["PHP","MySQL","JS","CSS"]
+  },
+  {
+    "name": "comerciosys",
+    "path": "./comerciosys/",
+    "desc": "Sistema de ventas/comercio (PHP, MySQL, JS, CSS)",
+    "tech": ["PHP","MySQL","JS","CSS"]
+  },
+  {
+    "name": "farmacia",
+    "path": "./farmacia/",
+    "desc": "Sistema de gestión de farmacia (PHP, MySQL, JS, CSS)",
+    "tech": ["PHP","MySQL","JS","CSS"]
+  },
+  {
+    "name": "Ferreteria",
+    "path": "./Ferreteria/",
+    "desc": "Sistema para ferretería (PHP, MySQL, JS, CSS)",
+    "tech": ["PHP","MySQL","JS","CSS"]
+  },
+  {
+    "name": "gestionrs",
+    "path": "./gestionrs/",
+    "desc": "Proyecto de gestión (PHP, MySQL, JS, CSS)",
+    "tech": ["PHP","MySQL","JS","CSS"]
+  },
+  {
+    "name": "optica_pro",
+    "path": "./optica_pro/",
+    "desc": "Sistema para óptica (PHP, MySQL, JS, CSS)",
+    "tech": ["PHP","MySQL","JS","CSS"]
+  }
+]

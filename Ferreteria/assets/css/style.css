@@ -1,0 +1,127 @@
+/* styles personalizados */
+html, body { height: 100%; }
+body {
+  margin: 0;
+  padding-top: 0; /* quitar espacio superior para que el sidebar llegue al tope */
+  background: #f8f9fa;
+}
+
+.card-summary {
+  min-height: 110px;
+  display: flex;
+  align-items: stretch;
+}
+
+.card-summary .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Ensure the numeric value doesn't wrap and scales responsively */
+.card-summary .card-text {
+  margin: 0;
+  /* adapt font size but keep it within sensible bounds */
+  font-size: clamp(1.6rem, 1.25rem + 1.2vw, 2.6rem);
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Sidebar styles: layout with CSS Grid */
+#appLayout { min-height: 100vh; display: grid; grid-template-columns: 220px 1fr; }
+#sidebar { width: 220px; }
+@media (max-width: 768px) {
+  /* mobile: collapse grid to single column and sidebar becomes overlay */
+  #appLayout { grid-template-columns: 1fr; }
+  #sidebar { display: block; position: fixed; left: -260px; top:0; height:100vh; z-index:1050; transition: left .25s ease; }
+  #sidebar.show { left: 0; }
+  body.sidebar-open::after { content: ''; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:1040; }
+}
+
+/* En pantallas grandes ajustar el main para dejar espacio al sidebar y mantener el contenido alineado */
+@media (min-width: 769px) {
+  main.flex-fill { margin-left: 0; }
+}
+
+/* Contenedor centrado para el contenido principal */
+.app-container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+.app-container .card { box-shadow: none; }
+@media (min-width: 769px) {
+  /* Ensure the container is centered within the second grid column */
+  .app-container { margin-left: auto; margin-right: auto; }
+}
+
+.sidebar-body .nav-link { color: rgba(255,255,255,0.85); }
+.sidebar-body .nav-link:hover { color: #fff; background: rgba(255,255,255,0.03); }
+
+.dashboard-charts { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 768px) { .dashboard-charts { grid-template-columns: 1fr; } }
+
+/* --- Global animations and micro-interactions --- */
+/* Page entry: app-container will fade/slide in when JS adds .visible */
+.app-container { opacity: 0; transform: translateY(8px); transition: opacity .5s ease, transform .5s ease; }
+.app-container.visible { opacity: 1; transform: none; }
+
+/* Cards: subtle lift on hover */
+.card, .card-summary { transition: transform .28s ease, box-shadow .28s ease; }
+.card:hover, .card-summary:hover { transform: translateY(-6px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+
+/* Buttons: smooth color/scale and press effect */
+.btn { transition: transform .08s ease, box-shadow .12s ease, background-color .18s ease; }
+.btn:hover { transform: translateY(-2px); }
+.btn:active, .btn.pressed { transform: translateY(0) scale(.99); box-shadow: none; }
+
+/* Inputs focus glow */
+.form-control { transition: box-shadow .18s ease, border-color .18s ease; }
+.form-control:focus { box-shadow: 0 0 0 4px rgba(13,110,253,0.08); border-color: #0d6efd; }
+
+/* Table rows: highlight on hover */
+.table tbody tr { transition: background-color .18s ease, transform .18s ease; }
+.table tbody tr:hover { background-color: rgba(13,110,253,0.03); transform: translateX(3px); }
+
+/* Sidebar link transitions (smooth color and small slide on hover) */
+#sidebar .nav-link { transition: color .18s ease, padding-left .18s ease; }
+#sidebar .nav-link:hover { padding-left: 12px; }
+
+/* Reveal on scroll helpers (use class `reveal-on-scroll` on elements to animate when visible) */
+.reveal-on-scroll { opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease; }
+.reveal-on-scroll.show { opacity: 1; transform: none; }
+
+/* Small helpers: toast entrance override for smoother toasts from SweetAlert */
+.swal2-container { transition: opacity .18s ease; }
+
+/* Print styles for nicer PDF/Print output */
+@media print {
+  /* Basic page setup */
+  @page { size: auto; margin: 12mm; }
+  html, body { background: #fff !important; color: #000 !important; }
+
+  /* Hide UI chrome */
+  #sidebar, #btnToggleSidebar, .btn, a.btn, .navbar, .sidebar-header, .sidebar-body, .dataTables_length, .dataTables_filter { display: none !important; }
+  /* Hide any interactive elements */
+  input, select, textarea, button { border: none; box-shadow: none; background: transparent; }
+
+  /* Make the content full-width and readable */
+  #appLayout { display: block !important; }
+  main.flex-fill { padding: 0 !important; }
+  .app-container { max-width: 100% !important; margin: 0; padding: 0; }
+
+  /* Ensure tables use full width and clear borders for print */
+  table { width: 100% !important; border-collapse: collapse; font-size: 12px; }
+  table th, table td { border: 1px solid #ddd !important; padding: 6px !important; }
+  table thead th { background: #f2f2f2 !important; }
+
+  /* Headings and summary styling */
+  h2, h4, h5 { color: #111; }
+  .mb-4, .mb-3 { margin-bottom: 12px !important; }
+
+  /* Print-only header */
+  .print-header { display: block !important; margin-bottom: 10px; }
+  .print-header .title { font-size: 18px; font-weight: 700; }
+  .print-header .meta { font-size: 12px; color: #333; }
+
+  /* Page break helpers */
+  .page-break { page-break-after: always; }
+}

@@ -1,0 +1,577 @@
+/* --- PALETA: minimal y amigable con la vista --- */
+:root {
+    /* Minimal & eye-friendly palette (desaturated, soft accents) */
+    --primary: #188FA3; /* Soft teal-blue */
+    /* RGB helper for tinted glows */
+    --primary-rgb: 24,143,163; /* r,g,b of --primary */
+    --primary-glow: rgba(var(--primary-rgb), 0.16);
+    --accent: #0F6B85; /* Darker accent */
+    --bg-main: #FBFCFD; /* Very light neutral background */
+    /* Background gradient stops (used for a soft page background) */
+    --bg-gradient-start: #eaf6f8;
+    --bg-gradient-end: #fbfcfd;
+    --card-bg: #FFFFFF; /* Card background */
+    --text-dark: #0F1720; /* Deep dark for text */
+    --text-light: #617078; /* Muted secondary text */
+    --border-color: #E6EDF0; /* Very subtle borders */
+    --shadow: 0 1px 3px rgba(16, 24, 32, 0.06); /* soft shadow */
+    /* helpers for neumorphic split shadows (used by .theme-select) */
+    --shadow-dark: rgba(16,24,32,0.06);
+    --shadow-light: rgba(255,255,255,0.85);
+    --sidebar-bg: #FFFFFF; /* Sidebar background */
+    --sidebar-hover: #F1FAFB; /* very subtle hover */
+    --error: #D9534F;
+    --success: #29A067;
+    --warning: #E6A23C;
+    --chart-bg: #FBFCFD;
+    --link-color: var(--primary);
+}
+
+/* --- ESTILOS GENERALES Y ANIMACIONES --- */
+body {
+    font-family: 'Poppins', sans-serif;
+    /* Soft diagonal gradient background for the whole app */
+    background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+    color: var(--text-dark);
+    font-size: 16px; /* comfortable base */
+    line-height: 1.65; /* airy spacing */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: 0.1px;
+    -webkit-font-feature-settings: "liga" 1;
+    /* smooth transition when switching themes */
+    transition: background-color 220ms ease, color 220ms ease, border-color 220ms ease;
+}
+
+/* Mejoras en la tipografía */
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--text-dark);
+}
+
+h1 { font-size: 2.25rem; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+h5 { font-size: 1.1rem; }
+h6 { font-size: 1rem; }
+
+p {
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.main-content {
+    animation: fadeIn 0.45s ease-out;
+}
+
+/* --- SIDEBAR --- */
+.sidebar {
+    background-color: var(--sidebar-bg);
+    min-height: 100vh;
+    width: 250px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.2s ease;
+    border-right: 1px solid var(--border-color);
+    padding-top: 1rem;
+}
+
+/* Logout fijo dentro del sidebar (parte inferior izquierda) */
+.sidebar .logout-fixed {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 18px;
+}
+.sidebar .btn-logout {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    justify-content: flex-start;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid rgba(229,62,62,0.08);
+    background: transparent;
+    color: var(--error);
+    font-weight: 600;
+}
+.sidebar .btn-logout i { color: var(--error); }
+.sidebar .btn-logout:hover { background: rgba(229,62,62,0.04); }
+
+.sidebar .nav-link {
+    color: var(--text-dark);
+    padding: 12px 20px;
+    margin: 6px 8px;
+    border-radius: 8px;
+    transition: background-color 0.18s ease, color 0.18s ease;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar .nav-link i { transition: transform 0.18s ease; }
+
+.sidebar .nav-link:hover { background-color: var(--sidebar-hover); }
+
+.sidebar .nav-link.active {
+    background-color: transparent;
+    color: var(--primary);
+    border-left: 4px solid var(--primary);
+    padding-left: 16px; /* compensate for left border */
+}
+
+/* --- CONTENIDO PRINCIPAL --- */
+.main-content {
+    margin-left: 250px;
+    padding: 2.25rem;
+    transition: margin 0.3s ease, padding 0.2s ease;
+    max-width: 1300px; /* slightly narrower for focus */
+    margin-right: auto;
+}
+
+/* Elevar ligeramente el título principal en páginas como Dashboard para
+   alinearlo horizontalmente con los controles del navbar (toggle/rol/salir). */
+.main-content .container-fluid > h2 {
+    margin-top: -1rem; /* mover hacia arriba: ajustar si quieres más/menos */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    /* en móvil no empujar tanto para evitar solapamiento con navbar vertical */
+    .main-content .container-fluid > h2 { margin-top: -0.35rem; }
+}
+
+/* Mejoras en el espaciado y organización */
+.section { margin-bottom: 2.25rem; padding: 1.25rem; }
+
+.content-header { margin-bottom: 1.75rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+
+.content-header h1 { font-size: 1.75rem; color: var(--text-dark); margin-bottom: 0.25rem; }
+
+.breadcrumb { background: transparent; padding: 0.5rem 0; margin-bottom: 0.75rem; font-size: 0.95rem; }
+
+/* --- TARJETAS (CARDS) --- */
+.card {
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+    border-radius: 12px;
+    background-color: var(--card-bg);
+    transition: box-shadow 0.18s ease, transform 0.18s ease;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Estilos específicos para las tarjetas del dashboard */
+.dashboard-card {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem; /* compacted for dashboard */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Compatibilidad: muchas tarjetas del Dashboard usan solo .card (ver index.php)
+   Apuntar a las columnas del primer row.mb-4 para compactarlas sin afectar
+   otras tarjetas en la web. */
+.row.mb-4 > .col-md-3 .card {
+    padding: 0.9rem; /* reduce padding del card */
+    border-radius: 10px;
+}
+.row.mb-4 > .col-md-3 .card .card-body {
+    padding: 0.5rem 0.6rem; /* cuerpo más compacto */
+}
+.row.mb-4 > .col-md-3 .card h6 {
+    font-size: 0.92rem;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+.row.mb-4 > .col-md-3 .card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0;
+}
+/* Reducir tamaño de los iconos que llevan la clase fa-2x sólo en estas tarjetas */
+.row.mb-4 > .col-md-3 .card i.fa-2x {
+    font-size: 1.3rem !important;
+}
+
+/* Si prefieres usar la clase .dashboard-card en el HTML, puedo aplicarla
+   automáticamente a los 4 divs .card en index.php para un selector más limpio. */
+.dashboard-card .card-value { font-size: 1.5rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.25rem; }
+.dashboard-card .card-label { color: var(--text-light); font-size: 0.92rem; font-weight: 500; }
+
+.dashboard-card .card-icon {
+    color: var(--primary);
+    padding: 0.25rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.card:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(16,24,32,0.06); }
+
+.card-header { background-color: transparent; border-bottom: 1px solid var(--border-color); font-weight: 600; color: var(--text-dark); }
+
+/* Dashboard stats: default styling retained (no forced compacting) */
+/* Keep cards with site default padding and spacing so Dashboard preserves original sizes */
+@media (min-width: 992px) {
+    .row.mb-4 > .col-md-3 { display: flex; }
+    .row.mb-4 > .col-md-3 .card { flex: 1; }
+}
+
+/* --- BOTONES --- */
+.btn { border-radius: 8px; font-weight: 600; padding: 0.5rem 1rem; transition: box-shadow 0.12s ease, transform 0.12s ease; }
+
+.btn-primary { background-color: var(--primary); border-color: var(--primary); color: white; }
+.btn-primary:hover { background-color: var(--accent); border-color: var(--accent); transform: none; box-shadow: 0 6px 12px rgba(16,24,32,0.06); }
+
+/* Override bootstrap warning/danger to use system design tokens */
+.btn-warning {
+    background-color: var(--accent) !important; /* use system accent (teal/darker) */
+    border-color: var(--accent) !important;
+    color: #072026 !important; /* dark text for contrast on accent */
+    box-shadow: 4px 4px 12px rgba(0,0,0,0.08), -4px -4px 10px var(--primary-glow);
+}
+.btn-warning:hover {
+    background-color: color-mix(in srgb, var(--accent) 80%, black 20%) !important;
+    border-color: color-mix(in srgb, var(--accent) 80%, black 20%) !important;
+}
+
+.btn-danger {
+    background-color: var(--error) !important; /* use system error color */
+    border-color: var(--error) !important;
+    color: #fff !important;
+    box-shadow: 4px 4px 12px rgba(0,0,0,0.08), -4px -4px 10px rgba(255,255,255,0.02);
+}
+.btn-danger:hover {
+    background-color: color-mix(in srgb, var(--error) 85%, black 15%) !important;
+    border-color: color-mix(in srgb, var(--error) 85%, black 15%) !important;
+}
+
+/* Ensure small icon-only buttons keep consistent shape and contrast */
+.btn-sm { padding: 0.35rem 0.6rem; }
+.btn-sm .fas { vertical-align: middle; }
+
+/* Small vertical offset for action buttons inside the page header area
+   (e.g. the +Nuevo Cliente / +Nuevo Producto buttons) so they're not too close
+   to the navbar. Targets only buttons inside container-fluid .mb-3 to avoid
+   wide impact. */
+/* action button spacing reverted to default */
+
+/* Theme selector (small dropdown) styled to match neumorphic controls */
+.theme-select {
+    background: var(--card-bg);
+    color: var(--text-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.35rem 0.7rem;
+    font-weight: 600;
+    box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+    appearance: none;
+    -webkit-appearance: none;
+}
+.theme-select:focus { outline: none; box-shadow: 0 6px 14px rgba(16,24,32,0.06); }
+
+/* --- TABLAS --- */
+.table-modern { border-collapse: separate; border-spacing: 0 8px; width: 100%; background-color: var(--bg-main); margin-bottom: 1.5rem; }
+
+/* Estilos para los gráficos */
+.chart-container { background-color: var(--card-bg); border-radius: 12px; padding: 1.25rem; border: 1px solid var(--border-color); margin-bottom: 2rem; }
+.chart-title { color: var(--text-dark); font-size: 1.15rem; font-weight: 600; margin-bottom: 0.75rem; }
+
+/* Canvas size helper: ensure dashboards charts share the same visual height */
+.chart-canvas {
+    width: 100% !important;
+    height: 220px !important; /* adjust for visual balance with cards */
+    display: block;
+}
+
+.table-modern thead th { background-color: transparent !important; color: var(--text-light); border-bottom: 1px solid var(--border-color); font-weight: 600; }
+
+/* Ensure tables inside cards use the card surface (avoid white rows from bootstrap defaults) */
+.card .table, .card .table td, .card .table th { background-color: transparent; }
+.card .table thead th { background-color: transparent !important; }
+.card .table tbody tr { background-color: var(--card-bg) !important; box-shadow: 0 2px 4px rgba(16,24,32,0.03); transition: all 0.12s ease; }
+.card .table tbody tr:hover { transform: none; box-shadow: 0 6px 12px rgba(16,24,32,0.04); }
+
+.table-modern tbody tr { background-color: var(--card-bg) !important; box-shadow: 0 2px 4px rgba(16,24,32,0.03); transition: all 0.12s ease; }
+.table-modern tbody tr:hover { transform: none; box-shadow: 0 6px 12px rgba(16,24,32,0.04); }
+
+.table-modern td, .table-modern th { border: none; vertical-align: middle; padding: 0.9rem 1rem; }
+
+/* --- NAVBAR --- */
+.navbar-custom { background-color: transparent; box-shadow: none; margin-left: 300px; transition: all 0.2s ease; }
+
+/* Wrapper that visually contains only the theme toggle */
+.nav-theme-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 6px 8px;
+    box-shadow: 8px 8px 18px var(--shadow-dark), -8px -8px 18px var(--shadow-light);
+    border: 1px solid var(--border-color);
+}
+.nav-theme-wrap .theme-toggle { margin: 0; }
+
+/* In dark mode the wrapper should use the dark surface */
+html[data-theme="dark"] .nav-theme-wrap, body[data-theme="dark"] .nav-theme-wrap { background: var(--card-bg); border-color: rgba(255,255,255,0.03); box-shadow: 10px 10px 24px rgba(0,0,0,0.55); }
+
+/* --- FORMULARIOS --- */
+.form-control, .form-select { border-radius: 8px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-dark); padding: 0.7rem 0.9rem; font-size: 1rem; line-height: 1.45; transition: all 0.12s ease; }
+.form-control:focus, .form-select:focus { border-color: var(--primary); box-shadow: 0 4px 10px rgba(16,24,32,0.04); outline: none; }
+.form-control::placeholder { color: var(--text-light); opacity: 0.9; }
+.form-control:disabled, .form-select:disabled { background-color: #FBFCFD; opacity: 0.85; cursor: not-allowed; }
+.form-label { font-weight: 500; margin-bottom: 0.5rem; color: var(--text-dark); font-size: 0.98rem; }
+
+/* Input groups */
+.input-group { margin-bottom: 1.25rem; }
+.input-group-text { background-color: var(--bg-main); border: 1px solid var(--border-color); color: var(--text-dark); font-weight: 500; }
+
+/* Validation */
+.form-control.is-invalid { border-color: var(--error); }
+.invalid-feedback { color: var(--error); font-size: 0.875rem; margin-top: 0.25rem; }
+
+/* --- MODALES --- */
+.modal-content { background-color: var(--card-bg); border: none; border-radius: 12px; }
+.modal-header, .modal-footer { border-color: var(--border-color); }
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .sidebar { width: 100%; height: auto; min-height: 0; position: relative; }
+    .main-content { margin-left: 0; padding: 1rem; }
+    .navbar-custom { margin-left: 0; background-color: var(--card-bg); border-radius: 8px; margin: 1rem; padding: 0.5rem; }
+}
+
+/* Reportes: asegurar que los dos paneles de reportes tengan la misma altura visual */
+.report-charts .card {
+    min-height: 220px; /* ligeramente reducido para que no se vean tan grandes */
+}
+.report-charts .card .card-body { height: 100%; display: flex; align-items: center; justify-content: center; padding: 0.85rem; }
+
+/* tamaño de canvas dentro de tarjetas de reportes (un poco más pequeño que dashboard) */
+.report-charts .chart-canvas { height: 200px !important; }
+
+@media (max-width: 992px) {
+    .report-charts .card { min-height: 180px; }
+}
+
+/* --- ACCESIBILIDAD Y MEJORAS DE VISIBILIDAD --- */
+/* Focus visible mejorado */
+:focus-visible { outline: 3px solid rgba(24,143,163,0.18); outline-offset: 2px; border-radius: 4px; }
+
+/* Carrito (ventas): forzar texto claro en las celdas del carrito para mejor legibilidad */
+.main-content .container-fluid .row > .col-md-5 .card .table td,
+.main-content .container-fluid .row > .col-md-5 .card .table th,
+.main-content .container-fluid .row > .col-md-5 .card .table tbody tr,
+.main-content .container-fluid .row > .col-md-5 .card .table tbody tr td {
+    color: var(--text-light) !important;
+    -webkit-text-fill-color: var(--text-light) !important;
+    opacity: 1 !important;
+}
+
+/* Asegurar que el total y encabezados sigan siendo legibles */
+.main-content .container-fluid .row > .col-md-5 .card .card-header h5,
+.main-content .container-fluid .row > .col-md-5 .card .card-body h5 {
+    color: var(--text-dark) !important;
+}
+
+/* Skip to main content link */
+.skip-to-main-content { position: absolute; top: -100px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 8px 16px; z-index: 1100; transition: top 0.3s; border-radius: 0 0 4px 4px; }
+.skip-to-main-content:focus { top: 0; }
+
+/* Focus indicators */
+.btn:focus, .nav-link:focus, .form-control:focus { box-shadow: 0 0 0 4px rgba(24,143,163,0.08); outline: none; }
+
+.text-muted { color: var(--text-light) !important; }
+
+.table-modern tbody tr { background-color: var(--card-bg) !important; color: var(--text-dark) !important; }
+.table-modern td, .table-modern th { color: var(--text-dark) !important; }
+
+/* Icon helpers */
+.icon-text { display: inline-flex; align-items: center; gap: 0.5rem; }
+
+/* State indicators */
+.status-indicator { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 0.5rem; }
+.status-success { background-color: var(--success); }
+.status-warning { background-color: var(--warning); }
+.status-error { background-color: var(--error); }
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+/* --- Neumorphic enhancements --- */
+:root {
+    /* elevation surfaces */
+    --surface-elev-1: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(246,249,250,0.96));
+    --surface-elev-2: linear-gradient(180deg, rgba(250,251,252,0.98), rgba(242,246,247,0.96));
+}
+
+/* Make cards slightly more 'puffy' with dual shadows */
+.card {
+    background: var(--card-bg);
+    box-shadow: 8px 8px 18px var(--shadow-dark), -8px -8px 18px var(--shadow-light);
+    border: 1px solid rgba(0,0,0,0.03);
+}
+
+/* Primary button — soft neumorphic style */
+.btn-primary {
+    background: linear-gradient(180deg, rgba(24,143,163,0.98), rgba(16,115,133,0.98));
+    color: white;
+    box-shadow: 6px 6px 14px rgba(16,24,32,0.12), -6px -6px 14px var(--primary-glow);
+    border: none;
+}
+.btn-primary:active { box-shadow: inset 6px 6px 12px rgba(0,0,0,0.18), inset -6px -6px 12px rgba(var(--primary-rgb),0.04); transform: translateY(1px); }
+.btn-primary:focus { outline: none; box-shadow: 0 0 0 6px rgba(var(--primary-rgb),0.08); }
+
+/* Theme toggle button (neumorphic pill) */
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 36px;
+    border-radius: 999px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: 8px 8px 18px var(--shadow-dark), -8px -8px 18px var(--shadow-light);
+    padding: 4px;
+    cursor: pointer;
+    transition: box-shadow 220ms ease, transform 160ms ease, background 220ms ease;
+}
+.theme-toggle .theme-toggle-inner { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 28px; border-radius: 999px; font-size: 0.95rem; }
+.theme-toggle .theme-toggle-inner i { color: var(--primary); font-size: 1rem; }
+.theme-toggle:hover { transform: translateY(-2px); box-shadow: 10px 10px 22px var(--shadow-dark), -10px -10px 22px var(--shadow-light); }
+.theme-toggle.is-dark { box-shadow: inset 6px 6px 14px rgba(0,0,0,0.35), inset -6px -6px 14px rgba(255,255,255,0.02); }
+.theme-toggle.is-dark .theme-toggle-inner i { color: #9EEAF2; }
+
+/* Adjust form elements to have subtle neumorphic inset on focus */
+.form-control:focus, .form-select:focus { box-shadow: inset 4px 4px 10px rgba(0,0,0,0.06), 0 6px 14px rgba(16,24,32,0.04); }
+
+/* Dark mode tweaks to keep neumorphism feel */
+body[data-theme="dark"] .card { box-shadow: 12px 12px 28px rgba(0,0,0,0.6), -8px -8px 18px rgba(255,255,255,0.02); }
+body[data-theme="dark"] .theme-toggle { background: var(--card-bg); border-color: rgba(255,255,255,0.03); }
+
+
+/* --- MODO OSCURO (variables overrides) --- */
+body[data-theme="dark"] {
+    --primary: #2bb3c8;
+    --accent: #0ea5a0;
+    --bg-main: #07101a; /* deep navy */
+    --card-bg: #0f1724; /* card surface */
+    --text-dark: #E6EEF2; /* light text */
+    --text-light: #9FB3BB; /* muted light */
+    --border-color: rgba(255,255,255,0.04);
+    --shadow: 0 6px 16px rgba(0,0,0,0.55);
+    --shadow-dark: rgba(0,0,0,0.5);
+    --shadow-light: rgba(255,255,255,0.03);
+    --primary-rgb: 43,179,200; /* rgb for #2bb3c8 */
+    --primary-glow: rgba(var(--primary-rgb), 0.12);
+    --sidebar-bg: #061018;
+    --sidebar-hover: rgba(255,255,255,0.02);
+    --chart-bg: #071018;
+    /* Dark-mode gradient */
+    --bg-gradient-start: #05121a;
+    --bg-gradient-end: #07101a;
+    --link-color: #8fe0ef;
+}
+
+/* Adjust some element specifics for dark mode */
+body[data-theme="dark"] .navbar-custom,
+body[data-theme="dark"] .card,
+body[data-theme="dark"] .chart-container,
+body[data-theme="dark"] .modal-content { box-shadow: var(--shadow); border-color: var(--border-color); background-color: var(--card-bg); }
+
+body[data-theme="dark"] .btn-primary { background-color: var(--primary); border-color: var(--primary); color: #0b1720; }
+
+/* Compatibility: also support html[data-theme="dark"] (JS toggles documentElement in some places) */
+html[data-theme="dark"] {
+    --primary: #2bb3c8;
+    --accent: #0ea5a0;
+    --bg-main: #07101a;
+    --card-bg: #0f1724;
+    --text-dark: #E6EEF2;
+    --text-light: #9FB3BB;
+    --border-color: rgba(255,255,255,0.04);
+    --shadow: 0 6px 16px rgba(0,0,0,0.55);
+    --shadow-dark: rgba(0,0,0,0.5);
+    --shadow-light: rgba(255,255,255,0.03);
+    --primary-rgb: 43,179,200;
+    --primary-glow: rgba(var(--primary-rgb), 0.12);
+    --sidebar-bg: #061018;
+    --sidebar-hover: rgba(255,255,255,0.02);
+    --chart-bg: #071018;
+    --bg-gradient-start: #05121a;
+    --bg-gradient-end: #07101a;
+    --link-color: #8fe0ef;
+}
+
+html[data-theme="dark"] .navbar-custom,
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .chart-container,
+html[data-theme="dark"] .modal-content { box-shadow: var(--shadow); border-color: var(--border-color); background-color: var(--card-bg); }
+
+html[data-theme="dark"] .btn-primary { background-color: var(--primary); border-color: var(--primary); color: #0b1720; }
+
+html[data-theme="dark"] .card { box-shadow: 12px 12px 28px rgba(0,0,0,0.6), -8px -8px 18px rgba(255,255,255,0.02); }
+html[data-theme="dark"] .theme-toggle { background: var(--card-bg); border-color: rgba(255,255,255,0.03); }
+
+/* Keep navbar transparent even in dark theme; only the small .nav-theme-wrap should carry the neumorphic surface */
+html[data-theme="dark"] .navbar-custom,
+body[data-theme="dark"] .navbar-custom {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* --- COMPROBANTE: asegurar contraste legible en el recibo/print --- */
+.comprobante .card, .comprobante .card * {
+    /* Use the main text variable so it adapts to light/dark themes */
+    color: var(--text-dark) !important;
+}
+.comprobante .card .text-muted {
+    color: var(--text-light) !important;
+}
+.comprobante .table thead th,
+.comprobante .table tfoot td {
+    color: var(--text-dark) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.comprobante .table tbody td {
+    color: var(--text-dark) !important;
+}
+.comprobante small, .comprobante p, .comprobante h4, .comprobante h6 {
+    color: var(--text-dark) !important;
+}
+/* Buttons inside comprobante: keep readable against dark card-bg */
+.comprobante .btn, .comprobante a.btn {
+    color: var(--text-dark) !important;
+}
+html[data-theme="dark"] .comprobante .btn, body[data-theme="dark"] .comprobante .btn {
+    color: var(--text-dark) !important;
+}
+
+/* Print tweaks: ensure text prints as dark on white paper */
+@media print {
+    body { background: #fff !important; }
+    .comprobante .card { box-shadow: none !important; border: none !important; background: transparent !important; }
+    .comprobante .card * { color: #000 !important; }
+}

@@ -1,0 +1,1238 @@
+/*
+    OdHCL - Sistema de Historias Clínicas Dentales
+    Esquema de colores: azul, verde, blanco
+    Diseño profesional y limpio
+*/
+
+:root {
+    --color-primary: #1976d2;
+    --color-secondary: #43a047;
+    --color-bg: #f5f8fa;
+    --color-sidebar: #1e293b;
+    --color-sidebar-text: #fff;
+    --color-header-bg: #fff;
+    --color-card-bg: #e3f2fd;
+    --color-border: #cfd8dc;
+    --color-accent: #00bcd4;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--color-bg);
+    color: #222;
+}
+
+
+/* Visual improvements */
+
+h2 {
+    color: var(--color-primary);
+    margin-bottom: 12px;
+}
+
+button {
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 8px 12px;
+    border: none;
+    background: var(--color-primary);
+    color: #fff;
+}
+
+button.secondary {
+    background: #f0f0f0;
+    color: #333;
+    border: 1px solid var(--color-border);
+}
+
+.report-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+}
+
+input,
+select,
+textarea {
+    outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.08);
+    border-color: var(--color-primary);
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 240px;
+    background: var(--color-sidebar);
+    color: var(--color-sidebar-text);
+    display: flex;
+    flex-direction: column;
+    padding: 24px 0;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 32px;
+    color: var(--color-accent);
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar nav ul li {
+    margin: 16px 0;
+}
+
+.sidebar nav ul li a {
+    color: var(--color-sidebar-text);
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 10px 32px;
+    display: block;
+    border-radius: 6px 0 0 6px;
+    transition: background 0.2s;
+}
+
+.sidebar nav ul li a.active,
+.sidebar nav ul li a:hover {
+    background: var(--color-primary);
+    color: #fff;
+}
+
+.main-content {
+    flex: 1;
+    background: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+}
+
+.main-header {
+    background: var(--color-header-bg);
+    border-bottom: 1px solid var(--color-border);
+    padding: 16px 32px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 1rem;
+}
+
+.notifications {
+    background: var(--color-accent);
+    color: #fff;
+    border-radius: 50px;
+    padding: 4px 12px;
+    font-weight: bold;
+}
+
+.section {
+    padding: 32px;
+}
+
+.dashboard .stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 24px;
+}
+
+
+/* Dashboard enhanced cards */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px;
+    margin-top: 16px;
+}
+
+.dash-card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), #fff);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 6px 18px rgba(15, 76, 129, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Charts (barras) */
+.bars-wrap {
+    display:flex;
+    align-items:stretch; /* stretch children so percent heights inside work */
+    gap:8px;
+    height:160px;
+    padding:8px;
+    width:100%;
+}
+.bar-item {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-end;
+    flex:1 1 0;
+    min-width:38px;
+}
+.bar-fill {
+    width:28px;
+    border-radius:6px 6px 0 0;
+    transition:height 500ms ease;
+    box-shadow: inset 0 -3px 6px rgba(0,0,0,0.06);
+    display:block;
+}
+.bar-value { margin-top:8px; font-weight:700; color:#333; font-size:0.9rem; }
+.bar-label { margin-top:6px; font-size:0.8rem; color:#666; text-align:center; max-width:72px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+/* SVG chart wrapper and tooltip */
+.svg-chart { width:100%; overflow:visible; }
+.chart-tooltip { background:#111827; color:#fff; padding:6px 8px; border-radius:6px; font-size:0.85rem; box-shadow:0 6px 18px rgba(0,0,0,0.12); }
+#chart-age, #chart-citas, #chart-ingresos { min-height:200px; }
+
+.dash-card .dc-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dash-card .dc-title {
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+.dash-card .dc-value {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--color-secondary);
+}
+
+.dash-card small {
+    color: #666;
+}
+
+
+/* Notification button and dropdown */
+
+.notif-wrapper {
+    position: relative;
+}
+
+.notif-button {
+    background: transparent;
+    border: 1px solid transparent;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.notif-count {
+    background: #ef5350;
+    color: #fff;
+    border-radius: 999px;
+    padding: 2px 6px;
+    font-size: 0.8rem;
+    margin-left: 6px;
+}
+
+.notif-dropdown {
+    position: absolute;
+    right: 0;
+    top: 36px;
+    width: 320px;
+    max-width: 90vw;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--color-border);
+    overflow: auto;
+    max-height: 360px;
+    z-index: 2000;
+}
+
+.notif-item {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+.notif-item:last-child {
+    border-bottom: none;
+}
+
+.notif-item .ni-title {
+    font-weight: 700;
+    color: #222;
+}
+
+.notif-item small {
+    color: #666;
+    display: block;
+    margin-top: 4px;
+}
+
+.notif-empty {
+    padding: 18px;
+    color: #666;
+}
+
+.stat-card {
+    background: var(--color-card-bg);
+    border-radius: 12px;
+    padding: 24px 32px;
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+    min-width: 180px;
+    text-align: center;
+}
+
+.stat-title {
+    font-size: 1rem;
+    color: var(--color-primary);
+}
+
+.stat-value {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: var(--color-secondary);
+}
+
+form#form-historia {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(67, 160, 71, 0.08);
+    padding: 32px;
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+form fieldset {
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+form legend {
+    font-weight: bold;
+    color: var(--color-primary);
+}
+
+form label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+form input,
+form select,
+form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+form button[type="submit"] {
+    background: var(--color-secondary);
+    color: #fff;
+    border: none;
+    padding: 12px 0;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: background 0.2s;
+}
+
+form button[type="submit"]:hover {
+    background: var(--color-primary);
+}
+
+#odontograma {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.odontograma-diente {
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    border: 2px solid var(--color-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: background 0.2s, border 0.2s;
+}
+
+.odontograma-diente.marcado {
+    background: var(--color-accent);
+    border-color: var(--color-secondary);
+    color: #fff;
+}
+
+
+/* Condiciones visuales */
+
+.odontograma-diente[data-condicion="Caries"] {
+    background: #ff7043;
+    border-color: #d84315;
+    color: #fff;
+}
+
+.odontograma-diente[data-condicion="Obturacion"] {
+    background: #ffca28;
+    border-color: #ffb300;
+    color: #222;
+}
+
+.odontograma-diente[data-condicion="Corona"] {
+    background: #8e24aa;
+    border-color: #6a1b9a;
+    color: #fff;
+}
+
+.odontograma-diente[data-condicion="Extraccion"] {
+    background: #90a4ae;
+    border-color: #78909c;
+    color: #fff;
+}
+
+.odontograma-diente[data-condicion="Implante"] {
+    background: #4db6ac;
+    border-color: #00796b;
+    color: #fff;
+}
+
+.odontograma-diente[data-condicion="Fractura"] {
+    background: #ef5350;
+    border-color: #c62828;
+    color: #fff;
+}
+
+#odontograma-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.odontograma-legend {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.odontograma-legend .legend-item {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot.caries {
+    background: #ff7043
+}
+
+.dot.obt {
+    background: #ffca28
+}
+
+.dot.corona {
+    background: #8e24aa
+}
+
+#lista-pacientes {
+    margin-top: 16px;
+    list-style: none;
+    padding: 0;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+#lista-pacientes li {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.12s;
+}
+
+#lista-pacientes li .lp-info {
+    font-weight: 600;
+}
+
+#lista-pacientes li .lp-dni {
+    font-weight: 400;
+    color: #666;
+    margin-left: 6px;
+}
+
+#lista-pacientes li .lp-age {
+    font-weight: 400;
+    color: #666;
+    margin-left: 6px;
+}
+
+#lista-pacientes li .lp-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.icon-btn {
+    background: transparent;
+    border-radius: 6px;
+    padding: 6px;
+    border: 1px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-btn svg {
+    display: block;
+}
+
+.btn-edit {
+    color: var(--color-primary);
+}
+
+.btn-delete {
+    color: #fff;
+    background: #ef5350;
+    border: none;
+    padding: 6px 8px;
+    border-radius: 6px;
+}
+
+.icon-btn:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+#lista-pacientes li:hover {
+    background: var(--color-card-bg);
+}
+
+#calendario {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+    padding: 24px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.agenda-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 24px;
+    align-items: start;
+}
+
+.agenda-form h3 {
+    color: var(--color-primary);
+    margin-top: 0;
+}
+
+.agenda-form label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.agenda-form input,
+.agenda-form select {
+    width: 100%;
+}
+
+
+/* Buscar paciente en agenda */
+
+#buscar-cita {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid var(--color-border);
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.agenda-form {
+    background: #fff;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+}
+
+.agenda-form h3 {
+    margin-top: 0;
+    color: var(--color-primary);
+}
+
+.agenda-form label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.report-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.03);
+}
+
+.config-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 24px;
+}
+
+
+/* Login overlay */
+
+.login-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+}
+
+.login-card {
+    background: #fff;
+    padding: 24px;
+    border-radius: 10px;
+    width: 320px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+}
+
+.login-card h2 {
+    margin-top: 0;
+    color: var(--color-primary);
+}
+
+.login-card input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    margin-bottom: 8px;
+}
+
+
+/* Facturación - estilo minimalista */
+
+.fact-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 14px;
+    align-items: start;
+}
+
+.invoice,
+.invoice-preview {
+    background: linear-gradient(180deg, #ffffff, #fbfdff);
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(30, 41, 59, 0.06);
+    box-shadow: none;
+}
+
+.invoice {
+    padding-bottom: 10px;
+}
+
+.invoice h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: var(--color-primary);
+    font-size: 1.05rem;
+}
+
+.invoice-preview h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: var(--color-primary);
+    font-size: 1.05rem;
+}
+
+.line-item {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.line-item select,
+.line-item .li-cant,
+.line-item .li-precio {
+    padding: 8px 10px;
+    border: 1px solid rgba(30, 41, 59, 0.06);
+    border-radius: 8px;
+    background: #fff;
+    height: 36px;
+    font-size: 0.95rem;
+}
+
+.line-item .li-cant,
+.line-item .li-precio {
+    width: 86px;
+}
+
+.line-item .li-precio {
+    width: 110px;
+    text-align: right;
+}
+
+.li-remove {
+    background: transparent;
+    border: 1px solid rgba(30, 41, 59, 0.06);
+    color: var(--color-primary);
+    padding: 6px 8px;
+    border-radius: 8px;
+}
+
+.li-remove:hover {
+    background: rgba(25, 118, 210, 0.04);
+}
+
+
+/* Actions */
+
+#add-line,
+#generar-boleta {
+    display: inline-block;
+    background: transparent;
+    border: 1px solid rgba(25, 118, 210, 0.12);
+    color: var(--color-primary);
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+#add-line:hover,
+#generar-boleta:hover {
+    background: rgba(25, 118, 210, 0.04);
+}
+
+.invoice-preview {
+    font-size: 0.95rem;
+    color: #222;
+}
+
+.invoice-preview #preview-content ul {
+    padding-left: 16px;
+    margin: 6px 0;
+}
+
+.invoice-preview h4 {
+    margin-top: 8px;
+}
+
+
+/* compact responsive tweaks */
+
+@media (max-width: 900px) {
+    .fact-grid {
+        grid-template-columns: 1fr;
+    }
+    .line-item .li-cant,
+    .line-item .li-precio {
+        width: 72px;
+    }
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    background: #e0f7fa;
+    color: var(--color-accent);
+}
+
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+    }
+    .agenda-grid,
+    .config-grid {
+        grid-template-columns: 1fr;
+    }
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 12px 0;
+    }
+    .sidebar nav ul {
+        display: flex;
+        gap: 12px;
+    }
+    .main-content {
+        padding: 0;
+    }
+    .section {
+        padding: 16px;
+    }
+    form#form-historia {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 600px) {
+    .sidebar {
+        font-size: 0.9rem;
+        padding: 8px 0;
+
+        .dash-card { transform-origin: center top; }
+    }
+
+/* Animations */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseScale {
+    0% { transform: scale(0.98); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+@keyframes barGrow {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
+}
+
+.anim-fade-up { animation: fadeInUp 420ms cubic-bezier(.2,.9,.3,1) both; }
+.anim-pulse { animation: pulseScale 900ms ease both; }
+
+/* apply small stagger to dashboard cards */
+.dashboard-grid .dash-card { opacity: 0; transform: translateY(6px); }
+.dashboard-grid .dash-card.visible { opacity: 1; transform: translateY(0); transition: transform 360ms ease, opacity 360ms ease; }
+
+/* SVG bars: use transform-origin bottom to animate scaleY */
+svg rect { transform-origin: center bottom; transform-box: fill-box; }
+svg rect.animate-grow { animation: barGrow 640ms cubic-bezier(.2,.9,.3,1) both; }
+
+/* tooltip subtle fade */
+.chart-tooltip { transition: opacity 160ms ease; opacity: 0; }
+.chart-tooltip.show { opacity: 1; }
+
+/* Lists entrance */
+#recent-patients li, #recent-boletas li, #upcoming-citas li { opacity: 0; transform: translateY(6px); }
+#recent-patients li.visible, #recent-boletas li.visible, #upcoming-citas li.visible { opacity: 1; transform: translateY(0); transition: all 360ms ease; }
+
+    .main-header {
+        padding: 8px 16px;
+    }
+    .section {
+        padding: 8px;
+    }
+    form#form-historia {
+        padding: 8px;
+    }
+}
+
+
+/* Toasts (notificaciones temporales) */
+
+#toast-container {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+}
+
+.toast {
+    min-width: 180px;
+    max-width: 360px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity .22s ease, transform .22s ease;
+}
+
+.toast.info {
+    background: #37474f;
+}
+
+.toast.success {
+    background: #2e7d32;
+}
+
+.toast.error {
+    background: #c62828;
+}
+
+
+/* Confirm modal */
+
+#confirm-overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+#confirm-card {
+    background: #fff;
+    padding: 18px;
+    border-radius: 10px;
+    width: 420px;
+    max-width: 94%;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+}
+
+#confirm-card h3 {
+    margin: 0;
+    color: var(--color-primary);
+}
+
+#confirm-card p {
+    margin: 10px 0 18px;
+    color: #333;
+    white-space: pre-line;
+}
+
+#confirm-card button {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+#confirm-card #confirm-cancel {
+    background: #f0f0f0;
+    color: #333;
+    margin-right: 8px;
+}
+
+#confirm-card #confirm-ok {
+    background: var(--color-primary);
+    color: #fff;
+}
+
+@media (max-width: 560px) {
+    #toast-container {
+        left: 12px;
+        right: 12px;
+        top: 12px;
+        align-items: center;
+    }
+    #confirm-card {
+        width: 92%;
+    }
+}
+
+
+/* Neumorphism donut widgets */
+
+.donut-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.donut-card {
+    background: linear-gradient(180deg, #ffffff, #fbfdff);
+    border-radius: 16px;
+    padding: 28px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 18px 24px 40px rgba(30, 41, 59, 0.06), -8px -8px 20px rgba(255, 255, 255, 0.9);
+    transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.donut-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 22px 30px 48px rgba(30, 41, 59, 0.08);
+}
+
+.donut-svg {
+    width: 160px;
+    height: 160px;
+}
+
+
+/* donut center layout */
+
+.donut-center {
+    position: relative;
+    margin-top: -140px;
+    /* sit the label over the svg center */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    /* make center clickable */
+    cursor: pointer;
+}
+
+.donut-perc {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-top: 8px;
+}
+
+.donut-label {
+    font-size: 0.88rem;
+    color: #5b6b77;
+    margin-top: 6px;
+    text-align: center;
+}
+
+
+/* make the percentage larger and vertically centered inside the hole */
+
+.donut-card .donut-perc {
+    font-size: 1.05rem;
+}
+
+.donut-card .donut-perc.big {
+    font-size: 1.25rem;
+}
+
+
+/* base ring (track) style */
+
+.donut-card .donut-ring {
+    stroke-width: 3.6;
+    stroke: #f0f4f8;
+}
+
+
+/* colored progress strokes */
+
+#donut-hist {
+    stroke: var(--color-secondary);
+}
+
+#donut-cap {
+    stroke: #1976d2;
+}
+
+#donut-prox {
+    stroke: #0288d1;
+}
+
+#donut-boleta {
+    stroke: #8e24aa;
+}
+
+
+/* ensure the dynamic path has rounded linecap */
+
+.donut-card .donut-ring[stroke-linecap] {
+    stroke-linecap: round;
+}
+
+
+/* center badge beneath the svg to look like an inner label */
+
+.donut-card>.donut-center {
+    margin-top: -110px;
+}
+
+@media (max-width: 900px) {
+    .donut-svg {
+        width: 120px;
+        height: 120px;
+    }
+    .donut-card {
+        padding: 18px;
+    }
+    .donut-card>.donut-center {
+        margin-top: -90px;
+    }
+}
+
+
+/* Tooltip for donuts */
+
+.donut-tooltip {
+    position: fixed;
+    background: rgba(20, 24, 28, 0.95);
+    color: #fff;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+    z-index: 12000;
+    transform: translate(-50%, -120%);
+    white-space: nowrap;
+}
+
+
+/* Modal for detailed lists */
+
+.modal-overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 13000;
+}
+
+.modal-card {
+    background: #fff;
+    border-radius: 12px;
+    width: min(760px, 92%);
+    max-height: 85vh;
+    overflow: auto;
+    padding: 18px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+}
+
+.modal-card h3 {
+    margin: 0 0 12px;
+    color: var(--color-primary);
+}
+
+.modal-close {
+    position: absolute;
+    right: 18px;
+    top: 12px;
+    background: transparent;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.modal-list {
+    margin-top: 8px;
+}
+
+.modal-list li {
+    padding: 8px 10px;
+    border-bottom: 1px solid #f0f2f4;
+}
+
+.modal-list li:last-child {
+    border-bottom: none;
+}
+
+.donut-center {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.donut-perc {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: var(--color-primary);
+}
+
+.donut-svg {
+    transform: rotate(-90deg);
+}
+
+.donut-ring {
+    transition: stroke-dashoffset 800ms cubic-bezier(0.4, 0, 0.2, 1), stroke 300ms ease;
+    stroke-linecap: round;
+}
+
+.donut-label {
+    font-size: 0.85rem;
+    color: #666;
+    text-align: center;
+    max-width: 120px;
+}
+
+.donut-sub {
+    font-size: 0.75rem;
+    color: #999;
+}
+
+
+/* colored strokes for categories */
+
+.donut-ring.pat {
+    stroke: #43a047;
+}
+
+.donut-ring.cita {
+    stroke: #1976d2;
+}
+
+.donut-ring.cap {
+    stroke: #ffb300;
+}
+
+.donut-ring.boleta {
+    stroke: #8e24aa;
+}

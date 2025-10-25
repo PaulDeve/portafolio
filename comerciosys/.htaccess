@@ -1,0 +1,98 @@
+# Configuración de Apache para ComercioSys
+# Sistema de Gestión de Ventas
+
+# Habilitar reescritura de URL
+RewriteEngine On
+
+# Redirigir a HTTPS (opcional)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Página de error personalizada
+ErrorDocument 404 /comerciosys/404.php
+ErrorDocument 500 /comerciosys/500.php
+
+# Configuración de seguridad
+# Nota: ServerTokens y ServerSignature solo pueden configurarse en httpd.conf
+
+# Prevenir acceso a archivos sensibles
+<Files "*.sql">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files "*.log">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files "config.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Prevenir acceso a directorios
+Options -Indexes
+
+# Configuración de caché
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/ico "access plus 1 month"
+</IfModule>
+
+# Compresión GZIP
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+</IfModule>
+
+# Headers de seguridad
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# Configuración de PHP
+<IfModule mod_php.c>
+    php_value upload_max_filesize 10M
+    php_value post_max_size 10M
+    php_value max_execution_time 300
+    php_value max_input_time 300
+    php_value memory_limit 128M
+    php_value session.cookie_httponly 1
+    php_value session.cookie_secure 0
+    php_value session.use_only_cookies 1
+</IfModule>
+
+# Redirecciones amigables
+RewriteRule ^dashboard/?$ dashboard.php [L]
+RewriteRule ^ventas/?$ ventas.php [L]
+RewriteRule ^usuarios/?$ usuarios.php [L]
+RewriteRule ^login/?$ login.php [L]
+RewriteRule ^logout/?$ logout.php [L]
+
+# Prevenir acceso directo a archivos PHP de configuración
+RewriteRule ^database/ - [F,L]
+RewriteRule ^includes/ - [F,L]
+RewriteRule ^logs/ - [F,L]
+RewriteRule ^backups/ - [F,L]
+RewriteRule ^uploads/ - [F,L]
+
+# Página de inicio
+DirectoryIndex index.php login.php
