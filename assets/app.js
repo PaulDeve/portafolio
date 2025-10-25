@@ -13,6 +13,7 @@ async function loadProjects() {
 function renderGrid(projects) {
     const grid = document.getElementById('grid');
     grid.innerHTML = '';
+    const isGitHubPages = window.location.hostname.includes('github.io');
     projects.forEach(p => {
         const article = document.createElement('article');
         article.className = 'card';
@@ -26,7 +27,10 @@ function renderGrid(projects) {
                   ${(p.tech||[]).map(t=>`<span class="badge">${escapeHtml(t)}</span>`).join('')}
                 </div>
                 <div class="card-actions">
-                    <a class="btn" target="_blank" href="${escapeHtml(p.path)}">Ver demo</a>
+                    ${isGitHubPages ? 
+                        `<button class="btn" onclick="alert('Los demos requieren PHP y MySQL. Por favor, descarga el código desde GitHub y ejecútalo localmente con XAMPP o Docker.')">Ver demo</button>` :
+                        `<a class="btn" target="_blank" href="${escapeHtml(p.path)}">Ver demo</a>`
+                    }
                     <button class="btn ghost js-details" data-name="${escapeHtml(p.name)}" data-path="${escapeHtml(p.path)}" data-desc="${escapeHtml(p.desc||'')}">Detalles</button>
                 </div>
             </div>`;
